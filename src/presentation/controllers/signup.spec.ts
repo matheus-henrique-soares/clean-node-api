@@ -6,14 +6,28 @@ interface SutTypes {
   sut: SignupController
   emailValidatorStub: EmailValidator
 }
-const makeSut = (): SutTypes => {
-  // stub returns a hardcoded thing
+// factory method
+const makeEmailvalidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
     isValid (email: string): boolean {
       return true
     }
   }
   const emailValidatorStub = new EmailValidatorStub()
+  return emailValidatorStub
+}
+const makeEmailvalidatorWithError = (): EmailValidator => {
+  class EmailValidatorStub implements EmailValidator {
+    isValid (email: string): boolean {
+      throw new Error()
+    }
+  }
+  const emailValidatorStub = new EmailValidatorStub()
+  return emailValidatorStub
+}
+const makeSut = (): SutTypes => {
+  // stub returns a hardcoded thing
+  const emailValidatorStub = makeEmailvalidator()
   const sut = new SignupController(emailValidatorStub)
   return {
     sut,
@@ -112,12 +126,7 @@ describe('Signup Controller', () => {
     expect(isValidSpy).toHaveBeenCalledWith('any_email@email.com')
   })
   test('Should return 500 if EmailValidator throws', () => {
-    class EmailValidatorStub implements EmailValidator {
-      isValid (email: string): boolean {
-        throw new Error()
-      }
-    }
-    const emailValidatorStub = new EmailValidatorStub()
+    const emailValidatorStub = makeEmailvalidatorWithError()
     const sut = new SignupController(emailValidatorStub)
     const httpRequest = {
       body: {
