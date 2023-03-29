@@ -2,11 +2,12 @@ import { SignupController } from './signup'
 import { MissingParamError, InvalidParamError, ServerError } from '../errors'
 import { type EmailValidator } from '../protocols/email-validator'
 
+// interface for he makesut factory method
 interface SutTypes {
   sut: SignupController
   emailValidatorStub: EmailValidator
 }
-// factory method
+
 const makeEmailvalidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
     isValid (email: string): boolean {
@@ -16,15 +17,8 @@ const makeEmailvalidator = (): EmailValidator => {
   const emailValidatorStub = new EmailValidatorStub()
   return emailValidatorStub
 }
-const makeEmailvalidatorWithError = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
-      throw new Error()
-    }
-  }
-  const emailValidatorStub = new EmailValidatorStub()
-  return emailValidatorStub
-}
+
+// factory method
 const makeSut = (): SutTypes => {
   // stub returns a hardcoded thing
   const emailValidatorStub = makeEmailvalidator()
@@ -126,8 +120,8 @@ describe('Signup Controller', () => {
     expect(isValidSpy).toHaveBeenCalledWith('any_email@email.com')
   })
   test('Should return 500 if EmailValidator throws', () => {
-    const emailValidatorStub = makeEmailvalidatorWithError()
-    const sut = new SignupController(emailValidatorStub)
+    const { sut, emailValidatorStub } = makeSut()
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => { throw new Error() })
     const httpRequest = {
       body: {
         name: 'any_name',
