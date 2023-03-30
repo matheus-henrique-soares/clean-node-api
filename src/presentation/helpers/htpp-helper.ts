@@ -1,4 +1,5 @@
 import { ServerError } from '../errors'
+import { type AccountModel } from '../../domain/models/account'
 import { type HttpResponse } from '../protocols/http'
 
 export const badRequest = (error: Error): HttpResponse => {
@@ -15,9 +16,9 @@ export const serverError = (): HttpResponse => {
   }
 }
 
-export const ok = (body): HttpResponse => {
+export const ok = (account: AccountModel): HttpResponse => {
   return {
-    body,
+    body: account,
     statusCode: 200
   }
 }
