@@ -1,10 +1,8 @@
 import { SignupController } from './signup'
-import { MissingParamError, InvalidParamError, ServerError } from '../errors'
-import { type EmailValidator } from '../protocols'
-import { type AddAccountModel, type AddAccount } from '../../domain/usecases/add-account'
-import { type AccountModel } from '../../domain/models/account'
+import { type AccountModel, type AddAccountModel, type AddAccount, type EmailValidator } from './signup-protcols'
+import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
 
-// interface for he makesut factory method
+// interface for the makesut factory method
 interface SutTypes {
   sut: SignupController
   emailValidatorStub: EmailValidator
