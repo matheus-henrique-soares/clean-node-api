@@ -1,6 +1,7 @@
 import { EmailValidatorAdapter } from './email-validator-adapter'
 import validator from 'validator'
 
+// aqui estamos garantindo que o retorno do validator sera true independente do que passemos para ele
 jest.mock('validator', () => {
   return {
     isEmail (): boolean {
@@ -20,5 +21,11 @@ describe('EmailValidator adpater', () => {
     const sut = new EmailValidatorAdapter()
     const isValid = sut.isValid('valid_email@email.com')
     expect(isValid).toBe(true)
+  })
+  test('Should call EmailValidatorAdapter.isValid with correct value', () => {
+    const sut = new EmailValidatorAdapter()
+    const isValidSpy = jest.spyOn(validator, 'isEmail')
+    sut.isValid('any_email@email.com')
+    expect(isValidSpy).toHaveBeenCalledWith('any_email@email.com')
   })
 })
