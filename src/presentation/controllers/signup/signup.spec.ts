@@ -1,5 +1,5 @@
 import { SignupController } from './signup'
-import { type AccountModel, type AddAccountModel, type AddAccount, type EmailValidator } from './signup-protcols'
+import { type AccountModel, type AddAccountModel, type AddAccount, type EmailValidator } from './signup-protocols'
 import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
 
 // interface for the makesut factory method
