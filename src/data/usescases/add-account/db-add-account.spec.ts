@@ -6,7 +6,7 @@ interface SutTypes {
   encrypterStub: Encrypter
 }
 
-const createEncrypterStub = (): Encrypter => {
+const makeEncrypterStub = (): Encrypter => {
   class EncrypterStub implements Encrypter {
     async encrypt (value: string): Promise<string> {
       return await new Promise(resolve => { resolve('hashed_password') })
@@ -16,8 +16,8 @@ const createEncrypterStub = (): Encrypter => {
   return encrypterStub
 }
 
-const createSut = (): SutTypes => {
-  const encrypterStub = createEncrypterStub()
+const makeSut = (): SutTypes => {
+  const encrypterStub = makeEncrypterStub()
   const sut = new DbAddAccount(encrypterStub)
   return {
     sut, encrypterStub
@@ -26,7 +26,7 @@ const createSut = (): SutTypes => {
 
 describe('DbAddcount usecase', () => {
   test('Should call Encrypter with correct password.', async () => {
-    const { sut, encrypterStub } = createSut()
+    const { sut, encrypterStub } = makeSut()
     const encrypterSpy = jest.spyOn(encrypterStub, 'encrypt')
     const accountData = {
       name: 'valid_name',
