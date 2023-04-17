@@ -1,6 +1,11 @@
 import { MongoHelper } from '../helpers/mongo-helper'
 import { AccountMongoRepository } from './account'
 
+const makeSut = (): AccountMongoRepository => {
+  const sut = new AccountMongoRepository()
+  return sut
+}
+
 describe('Account mongo repository.', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -10,7 +15,7 @@ describe('Account mongo repository.', () => {
   })
 
   test('Should return an account on success.', async () => {
-    const sut = new AccountMongoRepository()
+    const sut = makeSut()
     const account = await sut.add(
       {
         name: 'any_name',
