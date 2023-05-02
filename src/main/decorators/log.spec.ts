@@ -52,12 +52,14 @@ describe('Log decorator tests', () => {
         passwordConfirmation: 'any_password'
       }
     })
-    expect(httpResponse.statusCode).toBe(200)
-    expect(httpResponse.body).toEqual({
-      email: 'matheus@email.com',
-      name: 'matheus',
-      password: 'hashed_password',
-      id: 'any_id'
+    expect(httpResponse).toEqual({
+      body: {
+        email: 'matheus@email.com',
+        name: 'matheus',
+        password: 'hashed_password',
+        id: 'any_id'
+      },
+      statusCode: 200
     })
   })
 })
