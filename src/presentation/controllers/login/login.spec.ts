@@ -1,6 +1,6 @@
 import { MissingParamError, ServerError } from '../../errors'
 import { badRequest, ok, serverError, unauthorized } from '../../helpers/http/htpp-helper'
-import { type Validation } from '../../helpers/validators/validation'
+import { type Validation } from '../../protocols/validation'
 import { LoginController } from './login'
 import { type EmailValidator, type Authentication, type HttpRequest } from './login-protocols'
 
