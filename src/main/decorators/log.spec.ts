@@ -1,4 +1,4 @@
-import { type LogErrorRepository } from '../../data/protocols/log-error-repository'
+import { type LogErrorRepository } from '../../data/protocols/db/log-error-repository'
 import { ok, serverError } from '../../presentation/helpers/http/htpp-helper'
 import { type Controller, type HttpRequest, type HttpResponse } from '../../presentation/protocols'
 import { LogControllerDecorator } from './log'
