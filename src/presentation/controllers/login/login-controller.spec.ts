@@ -1,8 +1,8 @@
 import { MissingParamError, ServerError } from '../../errors'
 import { badRequest, ok, serverError, unauthorized } from '../../helpers/http/htpp-helper'
 import { type Validation } from '../../protocols/validation'
-import { LoginController } from './login'
-import { type EmailValidator, type Authentication, type HttpRequest, type AuthenticationModel } from './login-protocols'
+import { LoginController } from './login-controller'
+import { type EmailValidator, type Authentication, type HttpRequest, type AuthenticationModel } from './login-controller-protocols'
 
 interface SutTypes {
   sut: LoginController

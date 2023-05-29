@@ -1,4 +1,4 @@
-import { type Controller, type Authentication, type HttpRequest, type HttpResponse } from './login-protocols'
+import { type Controller, type Authentication, type HttpRequest, type HttpResponse } from './login-controller-protocols'
 import { badRequest, unauthorized, ok, serverError } from '../../helpers/http/htpp-helper'
 import { type Validation } from '../../protocols/validation'
 
