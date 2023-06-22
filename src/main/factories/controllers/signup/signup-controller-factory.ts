@@ -3,10 +3,9 @@ import { DbAddAccount } from '../../../../data/usecases/add-account/db-add-accou
 import { BcryptAdapter } from '../../../../infra/criptography/bcrypt-adapter/bcrypt-adapter'
 import { AccountMongoRepository } from '../../../../infra/db/mongodb/account/account-mongo-repository'
 import { type Controller } from '../../../../presentation/protocols'
-import { LogControllerDecorator } from '../../../decorators/log-controller-decorator'
-import { LogMongoRepository } from '../../../../infra/db/mongodb/log/log-mongo-repository'
 import { makeSignupValidation } from './signup-validation-factory'
 import { makeDbAuthentication } from '../../usecases/db-authentication-factory'
+import { makeLogControllerDecorator } from '../../decorators/log-controller-decorator-factory'
 
 export const makeSignupController = (): Controller => {
   const salt = 12
@@ -16,6 +15,5 @@ export const makeSignupController = (): Controller => {
   const dbAuthentication = makeDbAuthentication()
   const validation = makeSignupValidation()
   const signupController = new SignupController(dbbAddAccount, validation, dbAuthentication)
-  const logMongoRepository = new LogMongoRepository()
-  return new LogControllerDecorator(signupController, logMongoRepository)
+  return makeLogControllerDecorator(signupController)
 }
