@@ -1,6 +1,7 @@
-import { badRequest, serverError, ok } from '../../helpers/http/htpp-helper'
+import { badRequest, serverError, ok, forbidden } from '../../helpers/http/htpp-helper'
 import { type HttpRequest, type HttpResponse, type Controller, type AddAccount, type Authentication } from './signup-controller-protocols'
 import { type Validation } from '../../protocols/validation'
+import { EmailInUseError } from '../../errors'
 
 export class SignupController implements Controller {
   constructor (private readonly addAccount: AddAccount,
@@ -13,7 +14,10 @@ export class SignupController implements Controller {
       const error = this.validation.validate(httpRequest.body)
       if (error) return badRequest(error)
       const { password, email, name } = httpRequest.body
-      await this.addAccount.add({ name, email, password })
+      const account = await this.addAccount.add({ name, email, password })
+      if (account === null) {
+        return forbidden(new EmailInUseError())
+      }
       const accessToken = await this.authentication.auth({ email, password })
       return ok({ accessToken })
     } catch (error) {
