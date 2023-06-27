@@ -1,4 +1,5 @@
 node_modules
 dist
-data
+./data
 coverage
+.vscode
