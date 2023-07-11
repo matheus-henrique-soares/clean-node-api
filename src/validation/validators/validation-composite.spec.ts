@@ -1,4 +1,4 @@
-import { type Validation } from '../../protocols/validation'
+import { type Validation } from '../../presentation/protocols'
 import { ValidationComposite } from './validation-composite'
 
 interface SutTypes {
