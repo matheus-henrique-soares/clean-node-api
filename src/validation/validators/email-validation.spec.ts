@@ -1,4 +1,4 @@
-import { type EmailValidator } from '../../protocols/email-validator'
+import { type EmailValidator } from '../protocols/email-validator'
 import { EmailValidation } from './email-validation'
 
 interface SutTypes {
