@@ -1,7 +1,7 @@
-import { badRequest, serverError, ok, forbidden } from '../../helpers/http/htpp-helper'
+import { badRequest, serverError, ok, forbidden } from '../../../helpers/http/htpp-helper'
 import { type HttpRequest, type HttpResponse, type Controller, type AddAccount, type Authentication } from './signup-controller-protocols'
-import { type Validation } from '../../protocols'
-import { EmailInUseError } from '../../errors'
+import { type Validation } from '../../../protocols'
+import { EmailInUseError } from '../../../errors'
 
 export class SignupController implements Controller {
   constructor (private readonly addAccount: AddAccount,
