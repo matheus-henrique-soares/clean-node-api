@@ -13,7 +13,7 @@ const makeFakeToken = (): string => {
 const makeDecrypterStub = (): Decrypter => {
   class DecrypterStub implements Decrypter {
     async decrypt (data: any): Promise<any> {
-      return await new Promise(resolve => { resolve('decrypted_token') })
+      return await new Promise(resolve => { resolve('any_value') })
     }
   }
   return new DecrypterStub()
@@ -35,5 +35,11 @@ describe('DbLoadAccountByToken', () => {
     const token = makeFakeToken()
     await sut.load(token)
     expect(decryptSpy).toHaveBeenCalledWith(token)
+  })
+  test('Should return null if decrypter returns null.', async () => {
+    const { sut, decrypterStub } = makeSut()
+    jest.spyOn(decrypterStub, 'decrypt').mockReturnValueOnce(new Promise(resolve => { resolve(null) }))
+    const response = await sut.load(makeFakeToken())
+    expect(response).toBe(null)
   })
 })
