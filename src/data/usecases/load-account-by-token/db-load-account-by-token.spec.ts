@@ -9,6 +9,15 @@ interface SutTypes {
   loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository
 }
 
+const makeFakeAccount = (): AccountModel => {
+  return {
+    name: 'valid_name',
+    email: 'valid_email@email.com',
+    password: 'hashed_password',
+    id: 'valid_id'
+  }
+}
+
 const makeDecrypterStub = (): Decrypter => {
   class DecrypterStub implements Decrypter {
     async decrypt (data: any): Promise<any> {
@@ -22,12 +31,7 @@ const makeLoadAccountByTokenRepositoryStub = (): LoadAccountByTokenRepository =>
   class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
     async loadByToken (accessToken: string, role?: string): Promise<AccountModel> {
       return await new Promise(resolve => {
-        resolve({
-          name: 'valid_name',
-          email: 'valid_email@email.com',
-          password: 'hashed_password',
-          id: 'valid_id'
-        })
+        resolve(makeFakeAccount())
       })
     }
   }
@@ -69,5 +73,16 @@ describe('DbLoadAccountByToken', () => {
     jest.spyOn(loadAccountByTokenRepositoryStub, 'loadByToken').mockReturnValueOnce(new Promise(resolve => { resolve(null) }))
     const account = await sut.load('any_token', 'any_role')
     expect(account).toBeNull()
+  })
+  test('Should return an account on success.', async () => {
+    const { sut } = makeSut()
+    const account = await sut.load('any_token', 'any_role')
+    expect(account).toEqual(makeFakeAccount())
+  })
+  test('Should throw if decrypter throws.', async () => {
+    const { sut, decrypterStub } = makeSut()
+    jest.spyOn(decrypterStub, 'decrypt').mockReturnValueOnce(new Promise((resolve, reject) => { reject(new Error()) }))
+    const promise = sut.load('any_token', 'any_role')
+    await expect(promise).rejects.toThrow()
   })
 })
