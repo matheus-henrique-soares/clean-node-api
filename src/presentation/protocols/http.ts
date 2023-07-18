@@ -6,4 +6,5 @@ export interface HttpResponse {
 // clases do tipo get nao precisam de um body necessariamente, podendo ser null
 export interface HttpRequest {
   body?: any
+  headers?: any
 }
