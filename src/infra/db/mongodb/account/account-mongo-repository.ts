@@ -1,6 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { type AddAccountRepository } from '../../../../data/protocols'
-import { type UpdateAccessTokenRepository, type LoadAccountByEmailRepository } from '../../../../data/protocols/db'
+import { type UpdateAccessTokenRepository, type LoadAccountByEmailRepository, type AddAccountRepository } from '../../../../data/protocols/db/account'
 import { type AccountModel } from '../../../../domain/models/account'
 import { type AddAccountModel } from '../../../../domain/usecases/add-account'
 import { MongoHelper } from '../helpers/mongo-helper'
