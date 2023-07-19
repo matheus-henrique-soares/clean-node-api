@@ -88,7 +88,7 @@ describe('Account mongo repository.', () => {
       expect(fakeAccount.accessToken).toEqual('any_token')
     })
   })
-  describe('LoadAccountByEmailRepository', () => {
+  describe('LoadAccountByToken', () => {
     test('Should return an account on loadByToken without role.', async () => {
       const sut = makeSut()
       await accountCollection.insertOne({
