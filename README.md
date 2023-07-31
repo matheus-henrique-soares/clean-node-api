@@ -8,4 +8,4 @@ private study of clean architecture and tdd
 # Routes:
 - http://localhost:5050/api/signup
 - http://localhost:5050/api/login
-- http://localhost:5050/api/surveys
+
