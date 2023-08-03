@@ -37,11 +37,23 @@ describe('SurveyMongoRepository', () => {
     surveyCollection = MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
   })
-  test('should return an survey on add success.', async () => {
-    const sut = makeSut()
-    const surveyData = makeFakeSurveyData()
-    await sut.add(surveyData)
-    const survey = await surveyCollection.findOne(surveyData)
-    expect(survey).toEqual(surveyData)
+
+  describe('add()', () => {
+    test('should return an survey on add success.', async () => {
+      const sut = makeSut()
+      const surveyData = makeFakeSurveyData()
+      await sut.add(surveyData)
+      const survey = await surveyCollection.findOne(surveyData)
+      expect(survey).toEqual(surveyData)
+    })
+  })
+  describe('load()', () => {
+    test('should load a list of surverys on success.', async () => {
+      const surveyData = makeFakeSurveyData()
+      await surveyCollection.insertMany([{ surveyData }, { surveyData }])
+      const sut = makeSut()
+      const surveys = await sut.loadAll()
+      expect(surveys.length).toBe(2)
+    })
   })
 })
