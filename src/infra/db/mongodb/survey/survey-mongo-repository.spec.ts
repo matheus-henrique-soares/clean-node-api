@@ -48,12 +48,17 @@ describe('SurveyMongoRepository', () => {
     })
   })
   describe('load()', () => {
-    test('should load a list of surverys on success.', async () => {
+    test('should return a list of surverys on success.', async () => {
       const surveyData = makeFakeSurveyData()
       await surveyCollection.insertMany([{ surveyData }, { surveyData }])
       const sut = makeSut()
       const surveys = await sut.loadAll()
       expect(surveys.length).toBe(2)
+    })
+    test('should return am empty array if there is no surveys.', async () => {
+      const sut = makeSut()
+      const surveys = await sut.loadAll()
+      expect(surveys.length).toBe(0)
     })
   })
 })
