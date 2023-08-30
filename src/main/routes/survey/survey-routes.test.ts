@@ -60,4 +60,20 @@ describe('Login routes.', () => {
         .expect(403)
     })
   })
+  describe('GET /surveys.', () => {
+    test('Should return 403 on load surveys without accessToken.', async () => {
+      await request(app)
+        .get('/api/surveys')
+        .send({
+          question: 'question',
+          answers: [
+            {
+              answer: 'answer 1',
+              image: 'http//image-name.com'
+            }
+          ]
+        })
+        .expect(403)
+    })
+  })
 })
