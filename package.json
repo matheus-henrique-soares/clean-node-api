@@ -12,6 +12,7 @@
     "test:staged": "npm test -- --findRelatedTests",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
+    "test:integration/verbose": "jest --passWithNoTests --runInBand -c jest-integration-config.js",
     "test:ci": "npm test -- --coverage",
     "up": "npm run build && docker-compose up -d",
     "down": "docker-compose down"

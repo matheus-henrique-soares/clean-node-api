@@ -57,7 +57,7 @@ describe('Login routes.', () => {
             }
           ]
         })
-        .expect(403)
+        .expect(204)
     })
   })
   describe('GET /surveys.', () => {
@@ -74,6 +74,19 @@ describe('Login routes.', () => {
           ]
         })
         .expect(403)
+    })
+    test('Should return 204 on add survey with valid accessToken.', async () => {
+      const { insertedId } = await accountCollection.insertOne({
+        name: 'matheus',
+        email: 'matheus@email.com',
+        password: '123'
+      })
+      const accessToken = sign(insertedId.toString(), env.jwtSecret)
+      await accountCollection.updateOne({ _id: insertedId }, { $set: { accessToken } })
+      await request(app)
+        .get('/api/surveys')
+        .set('x-access-token', accessToken)
+        .expect(204)
     })
   })
 })
